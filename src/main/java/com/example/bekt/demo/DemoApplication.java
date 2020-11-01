@@ -1,21 +1,14 @@
 package com.example.bekt.demo;
 
 import com.example.bekt.demo.service.CustomerHandler;
-
-// import com.example.bekt.demo.config.AppContextInitializer;
-// import com.example.bekt.demo.service.CustomerHandler;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-// import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Bean;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.boot.CommandLineRunner;
-// import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
 @SpringBootApplication(proxyBeanMethods = false)
@@ -38,8 +31,8 @@ public class DemoApplication {
 	public CommandLineRunner demo(CustomerHandler handler) {
 		return (args) -> {
 			System.out.println("CommandLineRunner Called");
-			// log.info("CommandLine Runner Called");
-			// log.info("Application Context: "+ applicationContext.getApplicationName());
+			log.info("CommandLine Runner Called");
+			log.info("Application Context: "+ applicationContext.getApplicationName());
 		};
 	}
 

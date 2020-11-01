@@ -1,32 +1,21 @@
 package com.example.bekt.demo.controller;
 
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-
+import com.example.bekt.demo.entity.Customer;
 import com.example.bekt.demo.service.CustomerHandler;
-import com.google.gson.Gson;
 
+import org.flywaydb.core.internal.util.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.thymeleaf.spring5.context.webflux.IReactiveDataDriverContextVariable;
+import org.thymeleaf.spring5.context.webflux.ReactiveDataDriverContextVariable;
 
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
-/**
- *
- * @author armena
- */
-@RestController
-@RequestMapping("/api/v2/customer")
-@Slf4j
+@Controller
 public class CustomerController {
 
     private Logger log = LoggerFactory.getLogger(CustomerController.class);
@@ -34,40 +23,23 @@ public class CustomerController {
     @Autowired
     private CustomerHandler customerHandler;
 
-    @GetMapping("/all")
-    @CrossOrigin
-    public ResponseEntity<Mono<?>>  findAll() {
-        log.info("1. We are loving coding in production!");
- 
-        Mono<List<String>> listName = customerHandler.getAllCustomer()
-            .map(x -> x.getFirstName().concat(" ").concat(x.getLastName()))
-            .collectList();
+    @GetMapping("/")
+    public String customer(final Model model) {
 
-        final Gson gson = new Gson();
-        Mono<String> str = listName.map(x -> gson.toJson(x) );
+        log.info("begin. fetch customer data ");
+        final StopWatch sw = new StopWatch();
+        sw.start();
 
-        return new ResponseEntity<>(str , HttpStatus.OK);
+        Flux<Customer> customerList = customerHandler.getAllCustomer();
+        log.info("{}", customerList);
+
+        IReactiveDataDriverContextVariable reactiveDataDrivenMode = 
+            new ReactiveDataDriverContextVariable(customerList, 1);
+        model.addAttribute("customers", reactiveDataDrivenMode);
+
+        sw.stop();
+        log.info("finished. fetch customer data ");
+        log.info("Processing time: Customer.customer() : {} ms", sw.getTotalTimeMillis());
+        return "customer";
     }
-
-    @GetMapping
-    @CrossOrigin
-    public Mono<String> find(@RequestParam String name) {
-        log.info("1. We are loving coding in production!");
-        return Mono.just("Hello " + name + " I hope I am reactive application!!!!!");
-    }
-
-    @GetMapping("/user")
-    @CrossOrigin
-    public ResponseEntity<Mono<?>> get() {
-        log.info("2. This is a GET request from you");
-        return new ResponseEntity<>(Mono.just("One User here"), HttpStatus.I_AM_A_TEAPOT);
-    }
-
-    @GetMapping("/user/second")
-    @CrossOrigin
-    public Mono<ResponseEntity<?>> load() {
-        log.info("3. Load me reactive client!");
-        return Mono.just(ResponseEntity.ok().body("Second user location here"));
-    }
-
 }
