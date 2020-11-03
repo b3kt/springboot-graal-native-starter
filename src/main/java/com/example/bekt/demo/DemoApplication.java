@@ -27,14 +27,14 @@ public class DemoApplication {
 		log.info("Init Called");
 	}
 
-	@Bean
-	public CommandLineRunner demo(CustomerHandler handler) {
-		return (args) -> {
-			System.out.println("CommandLineRunner Called");
-			log.info("CommandLine Runner Called");
-			log.info("Application Context: "+ applicationContext.getApplicationName());
-		};
-	}
+	// @Bean
+	// public CommandLineRunner demo(CustomerHandler handler) {
+	// 	return (args) -> {
+	// 		System.out.println("CommandLineRunner Called");
+	// 		log.info("CommandLine Runner Called");
+	// 		log.info("Application Context: "+ applicationContext.getApplicationName());
+	// 	};
+	// }
 
 	public static void main(String[] args) {
 		// applicationContext = new AnnotationConfigApplicationContext(DemoApplication.class);

@@ -146,10 +146,11 @@
 						--initialize-at-build-time=io.r2dbc.spi.ConstantPool,io.r2dbc.spi.Assert,io.r2dbc.spi.ValidationDepth 
 						--initialize-at-build-time=org.springframework.data.r2dbc.connectionfactory 
 						-H:+TraceClassInitialization 
+						-H:Name=demo-0.0.1-SNAPSHOT
+						-H:+ReportExceptionStackTraces
 						--no-fallback 
 						--allow-incomplete-classpath 
-						--report-unsupported-elements-at-runtime 
-						-H:+ReportExceptionStackTraces 
+						--report-unsupported-elements-at-runtime  
 						--no-server 
 						-Ddebug=true
 						--initialize-at-build-time=org.reactivestreams.Publisher 
