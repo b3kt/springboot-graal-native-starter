@@ -145,8 +145,7 @@
 						--initialize-at-build-time=io.r2dbc.spi.IsolationLevel,io.r2dbc.spi 
 						--initialize-at-build-time=io.r2dbc.spi.ConstantPool,io.r2dbc.spi.Assert,io.r2dbc.spi.ValidationDepth 
 						--initialize-at-build-time=org.springframework.data.r2dbc.connectionfactory 
-						-H:+TraceClassInitialization 
-						-H:Name=demo-0.0.1-SNAPSHOT
+						-H:+TraceClassInitialization
 						-H:+ReportExceptionStackTraces
 						--no-fallback 
 						--allow-incomplete-classpath 
